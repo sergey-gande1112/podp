@@ -101,9 +101,9 @@
                     if (result.ok) {
                         alert('Заявка на вступление одобрена!');
                     } else if (result.description && result.description.includes('chat_request_already_approved')) {
-                        alert('Ваша заявка уже была одобрена.');
+                        alert('Вы уже вступили в канал.');
                     } else {
-                        alert('Не удалось одобрить заявку. Попробуйте позже.');
+                        alert('Ваша заявка не найдена.');
                     }
                 } catch (error) {
                     console.error('Error:', error);
