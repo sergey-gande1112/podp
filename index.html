@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Our Telegram Channel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+        }
+
+        #app {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            #app {
+                padding: 15px;
+                width: 90%;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Нажмите кнопку вступить в канал</h1>
+        <button id="joinBtn">Вступить в канал</button>
+        <button id="humanBtn" style="display:none;">Я человек</button>
+    </div>
+
+    <script>
+        // Function to get Telegram user ID
+        function getTelegramUserId() {
+            // This will work if the page is opened as a Telegram Web App
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+                return window.Telegram.WebApp.initDataUnsafe.user.id;
+            }
+            return null;
+        }
+
+        // Event listener for the 'Вступить в канал' button
+        document.getElementById('joinBtn').addEventListener('click', () => {
+            const joinUrl = 'https://t.me/+yzY8Vu9ou8YwNGYy';
+            window.open(joinUrl, '_blank');
+            document.getElementById('joinBtn').style.display = 'none';
+            document.getElementById('humanBtn').style.display = 'block';
+        });
+
+        // Event listener for the 'Я человек' button
+        document.getElementById('humanBtn').addEventListener('click', async () => {
+            const userId = getTelegramUserId();
+            if (userId) {
+                try {
+                    const response = await fetch('https://api.telegram.org/bot7263696629:AAHsATED3c82dmKMpHLGxNztCcOPZKl0tQI/approveChatJoinRequest', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: -1001988369794,
+                            user_id: userId
+                        })
+                    });
+                    const result = await response.json();
+                    if (result.ok) {
+                        alert('Заявка на вступление одобрена!');
+                    } else {
+                        alert('Не удалось одобрить заявку. Попробуйте позже.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Произошла ошибка. Попробуйте позже.');
+                }
+            } else {
+                alert('Не удалось получить ID пользователя. Пожалуйста, перейдите на сайт через Telegram.');
+            }
+        });
+    </script>
+</body>
+</html>
