@@ -21,6 +21,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
+            position: relative;
         }
 
         h1 {
@@ -43,6 +44,19 @@
             background: #0056b3;
         }
 
+        #messageBox {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
         @media (max-width: 600px) {
             #app {
                 padding: 15px;
@@ -63,6 +77,7 @@
         <h1>Нажмите кнопку вступить в канал</h1>
         <button id="joinBtn">Вступить в канал</button>
         <button id="humanBtn" style="display:none;">Я человек</button>
+        <div id="messageBox"></div>
     </div>
 
     <script>
@@ -72,6 +87,16 @@
                 return window.Telegram.WebApp.initDataUnsafe.user.id;
             }
             return null;
+        }
+
+        // Function to show messages
+        function showMessage(message) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.innerText = message;
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 3000);
         }
 
         // Event listener for the 'Вступить в канал' button
@@ -99,18 +124,18 @@
                     });
                     const result = await response.json();
                     if (result.ok) {
-                        alert('Заявка на вступление одобрена!');
+                        showMessage('Заявка на вступление одобрена!');
                     } else if (result.description && result.description.includes('chat_request_already_approved')) {
-                        alert('Вы уже вступили в канал.');
+                        showMessage('Вы уже вступили в канал.');
                     } else {
-                        alert('Ваша заявка не найдена.');
+                        showMessage('Ваша заявка не найдена.');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('Произошла ошибка. Попробуйте позже.');
+                    showMessage('Произошла ошибка. Попробуйте позже.');
                 }
             } else {
-                alert('Не удалось получить ID пользователя. Пожалуйста, зайдите через Telegram.');
+                showMessage('Не удалось получить ID пользователя. Пожалуйста, зайдите через Telegram.');
             }
         });
     </script>
