@@ -56,6 +56,7 @@
             }
         }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div id="app">
@@ -67,7 +68,6 @@
     <script>
         // Function to get Telegram user ID
         function getTelegramUserId() {
-            // This will work if the page is opened as a Telegram Web App
             if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
                 return window.Telegram.WebApp.initDataUnsafe.user.id;
             }
@@ -108,7 +108,7 @@
                     alert('Произошла ошибка. Попробуйте позже.');
                 }
             } else {
-                alert('Не удалось получить ID пользователя. Пожалуйста, перейдите на сайт через Telegram.');
+                alert('Не удалось получить ID пользователя. Пожалуйста, зайдите через Telegram.');
             }
         });
     </script>
