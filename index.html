@@ -76,7 +76,7 @@
     <div id="app">
         <h1>Нажмите кнопку вступить в канал</h1>
         <button id="joinBtn">Вступить в канал</button>
-        <button id="humanBtn" style="display:none;">Я человек</button>
+        <button id="humanBtn">Я человек</button>
         <div id="messageBox"></div>
     </div>
 
@@ -103,8 +103,6 @@
         document.getElementById('joinBtn').addEventListener('click', () => {
             const joinUrl = 'https://t.me/+yzY8Vu9ou8YwNGYy';
             window.open(joinUrl, '_blank');
-            document.getElementById('joinBtn').style.display = 'none';
-            document.getElementById('humanBtn').style.display = 'block';
         });
 
         // Event listener for the 'Я человек' button
